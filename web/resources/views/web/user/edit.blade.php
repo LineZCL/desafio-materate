@@ -13,8 +13,8 @@
 			<label for="email">Email</label>
 			<input id="email" type="text" name="email" value="{{$user->email}}" >
 			<br/>
-			<label for="roleId" class="col-md-4 control-label">Role</label>
-			<select id="roleId" name = "roleId">
+			<label for="role_id" class="col-md-4 control-label">Role</label>
+			<select id="role_id" name = "role_id">
 				@foreach($roles as $role)
 				<option value="{{$role->id}}">{{$role->description}}</option>
 				@endforeach

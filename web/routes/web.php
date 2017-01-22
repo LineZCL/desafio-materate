@@ -1,5 +1,4 @@
 <?php
-Route::get('/', 'HomeController@index');
 
 Route::group(['namespace' => 'Auth'], function () {
 	Route::get('/login', 'LoginController@index');
@@ -9,7 +8,7 @@ Route::group(['namespace' => 'Auth'], function () {
 
 
 Route::group(['namespace' => 'Web', 'middleware' => 'auth'], function () {
-	Route::get('/users', 'UserController@list');
+	Route::get('/', 'UserController@list');
 	Route::get('/deleted-users', 'UserController@deletedUsers');
 	Route::get('/user/delete/{userId}',[
 		'uses' => 'UserController@delete',

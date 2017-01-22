@@ -25,7 +25,7 @@ class UserController extends Controller
 
 	public function delete($userId){
 		UserService::delete($userId); 
-		return redirect('/users');
+		return redirect('/');
 	}
 
 	public function edit($userId){
@@ -38,7 +38,7 @@ class UserController extends Controller
 	public function save(Request $request){
 		$data = $request->all();
 		$user = UserService::save($data);
-		return $user;
+		return redirect('/');
 	}
 
 }

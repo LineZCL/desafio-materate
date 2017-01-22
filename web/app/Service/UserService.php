@@ -25,26 +25,35 @@ class UserService{
 		return Role::all();
 	}
 	
-	public static function save( $data){
-
-		$validator = UserService::validator($data); 
+	public static function save( $data, $isNew){
+		$validator = ($isNew) ? UserService::validatorNew($data) : UserService::validatorNew($data); 
+		$userId = ($isNew) ? null : $data['id'];
 
 		if ($validator->fails()) {
 			//return redirect()->back()->withErrors($validator);
 			//return 'Deu ruim!';
 		}
 
-		User::updateOrCreate(
-			['id' => $data['id']],
-			['name' => $data['name'], 'email' => $data['email'], 'role_id' => intval($data['roleId'])]
-			);
+		return User::updateOrCreate(['id' => $userId], $data );
 	}
 
-	public static function validator( $data){
+	
+
+	private static function validatorEdit( $data){
 		$rules = array(
 			'name' => 'required',
-			'email' => 'required',
+			'email' => 'required | email',
 			'roleId' => 'required'
+			);
+		return Validator::make($data, $rules);
+	}
+
+	private static function validatorNew( $data){
+		$rules = array(
+			'name' => 'required',
+			'email' => 'required | email | unique:users',
+			'roleId' => 'required', 
+			'password' => 'required'
 			);
 		return Validator::make($data, $rules);
 	}

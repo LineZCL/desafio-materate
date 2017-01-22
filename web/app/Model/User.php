@@ -9,7 +9,7 @@ class User extends Authenticatable
 {
     use Notifiable;
 
-    const COMON = 1; 
+    const COMMON = 1; 
     const ADMIN = 2;
 
     /**
@@ -43,6 +43,6 @@ class User extends Authenticatable
     * Verifica se o usuário é ou não admin;
     */
     public function isAdmin(){
-            return $this->role->role_number == User::ADMIN;
+        return $this->role->role_number == User::ADMIN;
     }
 }

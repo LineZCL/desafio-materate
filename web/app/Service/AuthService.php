@@ -10,7 +10,7 @@ class AuthService{
 
 		if($user->isAdmin()){
 			if (Auth::attempt(['email' => $email, 'password' => $password, 'active' => true])) {
-				return "Autenticado";
+				return redirect('/users');
 			}
 		}
 		return redirect()->back();

@@ -1,17 +1,18 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\Auth;
 
 use Illuminate\Http\Request;
 use Auth;
 use MessageBag;
 use App\Service\AuthService;
+use App\Http\Controllers\Controller;
 
 class LoginController extends Controller
 {
 
     public function index(){
-        return view('login');
+        return view('/auth/login');
     }
 
     public function login(Request $request)
@@ -23,7 +24,6 @@ class LoginController extends Controller
     }
 
     public function logout(){
-        Auth::logout();
-        return view('login');
+        return AuthService :: logout();
     }
 }

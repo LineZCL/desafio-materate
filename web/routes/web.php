@@ -15,5 +15,10 @@ Route::group(['namespace' => 'Web', 'middleware' => 'auth'], function () {
 		'uses' => 'UserController@delete',
 		'as'   => 'delete_user'
 		]);
+	Route::get('/user/{userId}',[
+		'uses' => 'UserController@edit',
+		'as'   => 'edit_user'
+		]);
+	Route::post('/user/save', 'UserController@save');
 	
 });

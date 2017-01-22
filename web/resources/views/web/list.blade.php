@@ -23,6 +23,7 @@
                 </td>
                 <td>
                     <a href="{!! route('delete_user', ['userId' => $user->id]) !!}">delete</a>
+                    <a href="{!! route('edit_user', ['userId' => $user->id]) !!}">edit</a>
                 </td>
             </tr>
         @empty

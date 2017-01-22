@@ -23,9 +23,22 @@ class UserController extends Controller
 		return view('/web/list', ['users' => $users]);
 	}	
 
-	public function delete($user_id){
-		UserService::delete($user_id); 
+	public function delete($userId){
+		UserService::delete($userId); 
 		return redirect('/users');
+	}
+
+	public function edit($userId){
+		$user = UserService::findById($userId); 
+		$roles = UserService::findRoles(); 
+
+		return view('/web/user/edit', ['user' => $user, 'roles' => $roles]); 
+	}
+
+	public function save(Request $request){
+		$data = $request->all();
+		$user = UserService::save($data);
+		return $user;
 	}
 
 }

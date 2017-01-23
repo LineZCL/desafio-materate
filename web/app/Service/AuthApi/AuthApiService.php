@@ -71,7 +71,8 @@ class AuthApiService{
 	* Registra Login e sua data e horario.
 	*
 	**/
-	public function createUserLog($userId, $tokenId){
+	public function createUserLog($userId, $tokenId){ 
+
 		$userLog = ['user_id' => $userId, 'login_date' => new DateTime(), 'token_id' => $tokenId]; 
 		return UserLog::create($userLog);
 	}

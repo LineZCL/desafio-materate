@@ -9,6 +9,7 @@ use App\Model\User;
 use App\Http\Controllers\API\HttpErrorsCode;
 
 use App\Http\Controllers\Controller;
+use Illuminate\Support\Facades\Redis;
 
 class AuthApiController extends Controller
 {
@@ -30,17 +31,18 @@ class AuthApiController extends Controller
 		//Verifica se já está logado
 		$token = $authService->findTokenByUser($userId); 
 		if($token == null){
-			$token = $authService->generateToken($userId); 
+			$token = $authService->generateToken($userId);
 			$authService->createUserLog($userId, $token->id);
 		}
 
-		return response()->json($token, HttpErrorsCode::OK);
+		Redis::set('token', $token->description);
+		return response(HttpErrorsCode::OK);
 	}
 
-	public function logout(Request $request){
+	public function logout(){
 		$authService = new AuthApiService;
 
-		$tokenAuth = $request->all()['token'];
+		$tokenAuth = Redis::get('token');
 		$token = $authService->findTokenByDescription($tokenAuth);
 
 		if($token == null){
@@ -50,7 +52,7 @@ class AuthApiController extends Controller
 
 		$authService->logoutUserLog($token->id);
 		$authService->invalidateToken($token);
-
+		Redis::set('token', null);
 		return response(HttpErrorsCode::OK);
 	}
 }

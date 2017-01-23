@@ -1,11 +1,12 @@
 <?php
 
-namespace App\Http\Controllers\API;
+namespace App\Http\Controllers\API\User;
 
 use Illuminate\Http\Request;
 
 use App\Service\UserService;
 use App\Model\User;  
+use App\Http\Controllers\API\HttpErrorsCode;
 
 use App\Http\Controllers\Controller;
 

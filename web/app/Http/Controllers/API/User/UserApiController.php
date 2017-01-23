@@ -6,7 +6,7 @@ use Illuminate\Http\Request;
 
 use App\Service\UserService;
 use App\Model\User;  
-use App\Http\Controllers\API\HttpErrorsCode;
+use App\Http\Controllers\API\HttpCode;
 
 use App\Http\Controllers\Controller;
 
@@ -23,6 +23,11 @@ class UserApiController extends Controller
 		}
 		
 		$user = UserService::save($data,  $isNew);
-		return response	()->json($user, HttpErrorsCode::OK);
+		return response	()->json($user, HttpCode::OK);
+	}
+
+	public function getUserData(){
+		$userData = UserService::getUserData(); 
+		return response()->json($userData, HttpCode::OK);
 	}
 }

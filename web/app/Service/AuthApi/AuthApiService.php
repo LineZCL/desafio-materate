@@ -5,7 +5,7 @@ use App\Model\User;
 use App\Model\Token; 
 use App\Model\UserLog;
 
-
+use Illuminate\Support\Facades\Redis;
 use DateTime;
 class AuthApiService{	
 
@@ -88,6 +88,16 @@ class AuthApiService{
 		$userLog->save(); 
 	}
 	
+	/**
+	* Busca usuário logado. 
+	*
+	**/
+	public function findUserByToken(){
+		$tokenAuth = Redis::get('token');
+		$token =$this->findTokenByDescription($tokenAuth); 
+
+		return $token->user; 
+	}
 
 }	
 

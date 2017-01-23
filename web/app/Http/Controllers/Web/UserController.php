@@ -12,7 +12,7 @@ class UserController extends Controller
 		$active = true; 
 		$users = UserService::list($active);
 		
-		return view('/web/list', ['users' => $users]);
+		return view('/web/list', ['users' => $users, 'edit' => $active]);
 	}
 
 	public function deletedUsers(){
@@ -20,7 +20,7 @@ class UserController extends Controller
 		$active = false; 
 		$users = UserService::list($active);
 		
-		return view('/web/list', ['users' => $users]);
+		return view('/web/list', ['users' => $users, 'edit' => $active]);
 	}	
 
 	public function delete($userId){

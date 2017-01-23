@@ -6,7 +6,7 @@ use Illuminate\Http\Request;
 
 use App\Service\AuthApi\AuthApiService;
 use App\Model\User;  
-use App\Http\Controllers\API\HttpErrorsCode;
+use App\Http\Controllers\API\HttpCode;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Redis;
@@ -23,7 +23,7 @@ class AuthApiController extends Controller
 		$errorMessage = null;  
 		if($user == null){
 			$errorMessage = ['message' => 'Invalid credentials.'];
-			return response()->json($errorMessage, HttpErrorsCode::UNAUTHORIZED);
+			return response()->json($errorMessage, HttpCode::UNAUTHORIZED);
 		}
 
 		$userId = ($user->id);
@@ -36,7 +36,7 @@ class AuthApiController extends Controller
 		}
 
 		Redis::set('token', $token->description);
-		return response(HttpErrorsCode::OK);
+		return response(HttpCode::OK);
 	}
 
 	public function logout(){
@@ -47,12 +47,12 @@ class AuthApiController extends Controller
 
 		if($token == null){
 			$errorMessage = ['message' => 'Invalid token'];
-			return response()->json($errorMessage, HttpErrorsCode::BAD_REQUEST);
+			return response()->json($errorMessage, HttpCode::BAD_REQUEST);
 		}
 
 		$authService->logoutUserLog($token->id);
 		$authService->invalidateToken($token);
 		Redis::set('token', null);
-		return response(HttpErrorsCode::OK);
+		return response(HttpCode::OK);
 	}
 }

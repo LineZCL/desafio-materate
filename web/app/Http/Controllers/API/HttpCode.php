@@ -1,6 +1,6 @@
 <?php 
 namespace App\Http\Controllers\API;
-class HttpErrorsCode{
+class HttpCode{
 	const OK = 200; 
 	const INTERNAL_ERROR = 500; 
 	const BAD_REQUEST = 400;

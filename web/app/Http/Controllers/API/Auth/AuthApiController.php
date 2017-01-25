@@ -5,6 +5,9 @@ namespace App\Http\Controllers\API\Auth;
 use Illuminate\Http\Request;
 
 use App\Service\AuthApi\AuthApiService;
+use App\Service\AuthApi\TokenService;
+use App\Service\AuthApi\UserLogService;
+
 use App\Model\User;  
 use App\Http\Controllers\API\HttpCode;
 
@@ -13,13 +16,13 @@ use Illuminate\Support\Facades\Redis;
 
 class AuthApiController extends Controller
 {
-
+	//Faz Login
 	public function login(Request $request){
 		$credentials = $request->all(); 
-		$authService = new AuthApiService;
+		
 
 		//Verifica se as credenciais são válidas
-		$user = $authService->findByCredentials($credentials);
+		$user = AuthApiService::findByCredentials($credentials);
 		$errorMessage = null;  
 		if($user == null){
 			$errorMessage = ['message' => 'Invalid credentials.'];
@@ -29,30 +32,30 @@ class AuthApiController extends Controller
 		$userId = ($user->id);
 
 		//Verifica se já está logado
-		$token = $authService->findTokenByUser($userId); 
+		$token = TokenService::findTokenByUser($userId); 
 		if($token == null){
-			$token = $authService->generateToken($userId);
-			$authService->createUserLog($userId, $token->id);
+			$token = TokenService::generateToken($userId);
+			UserLogService::createUserLog($userId, $token->id);
 		}
 
-		Redis::set('token', $token->description);
-		return response(HttpCode::OK);
+		return response(HttpCode::OK)->cookie('token', $token->description);
 	}
 
-	public function logout(){
-		$authService = new AuthApiService;
+	//Faz logout
+	public function logout(Request $request){
 
-		$tokenAuth = Redis::get('token');
-		$token = $authService->findTokenByDescription($tokenAuth);
+		$tokenAuth = $request->cookie('token');
+
+		$token = TokenService::findTokenByDescription($tokenAuth);
 
 		if($token == null){
 			$errorMessage = ['message' => 'Invalid token'];
 			return response()->json($errorMessage, HttpCode::BAD_REQUEST);
 		}
 
-		$authService->logoutUserLog($token->id);
-		$authService->invalidateToken($token);
-		Redis::set('token', null);
+		UserLogService::logoutUserLog($token->id);
+		TokenService::invalidateToken($token);
+		
 		return response(HttpCode::OK);
 	}
 }

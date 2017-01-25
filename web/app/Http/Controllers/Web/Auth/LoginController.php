@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Controllers\Auth;
+namespace App\Http\Controllers\Web\Auth;
 
 use Illuminate\Http\Request;
 use Auth;
@@ -11,8 +11,12 @@ use App\Http\Controllers\Controller;
 class LoginController extends Controller
 {
 
+
     public function index(){
-        return view('/auth/login');
+        if( Auth::guest() ){
+            return view('/auth/login');
+        }
+        return redirect('/');        
     }
 
     public function login(Request $request)

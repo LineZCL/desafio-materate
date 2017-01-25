@@ -13,14 +13,14 @@ class AuthService{
 					return redirect('/');
 				}
 				else{
-					return redirect()->back()->with("error", "Email or password invalid!");
+					return redirect()->back()->with("error", "E-mail ou password incorreto!");
 				}	
 			}
 			else{
-				return redirect()->back()->with("error",  "You don't have permission to access this portal.");
+				return redirect()->back()->with("error",  "Você não tem permissão para acessar este portal.");
 			}
 		}
-		return redirect()->back()->with("error",  "You're not registered.");
+		return redirect()->back()->with("error",  "Usuário não encontrado!");
 	}
 
 	public static function logout(){

@@ -8,11 +8,8 @@ use Auth;
 class Authentication
 {
     /**
-     * Handle an incoming request.
+     * Se o usuário não estiver logado, enviar para a página de login. 
      *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  \Closure  $next
-     * @return mixed
      */
     public function handle($request, Closure $next)
     {

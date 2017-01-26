@@ -11,11 +11,8 @@ use Illuminate\Support\Facades\Redis;
 class AuthenticationApi
 {
     /**
-     * Handle an incoming request.
+     * Verifica pelo token se o usuário tem acesso ao serviço 
      *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  \Closure  $next
-     * @return mixed
      */
     public function handle($request, Closure $next)
     {
